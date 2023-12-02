@@ -1,0 +1,29 @@
+<%= form_for @post do |f| %>
+
+  <div class="field">
+    <%= f.label :食材・食品名 %>
+    <%= f.text_field :food, :size => 30 %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label :タンパク質  %>
+    <%= f.number_field :protein, step: '0.1', :size => 10 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :脂質  %>
+    <%= f.number_field :fat, step: '0.1', :size => 10 %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label :炭水化物  %>
+    <%= f.number_field :carbo, step: '0.1', :size => 10 %>
+  </div>
+
+
+ 
+    <%= f.submit "編集する" %>
+  <% end %>
+  

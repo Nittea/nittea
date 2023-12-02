@@ -1,0 +1,47 @@
+<h1>users#show</h1>
+<%= image_tag @user.image_url, size: "250x200" if @user.image? %>
+<p>名前 : <%= @user.name %></p>
+<p>メールアドレス : <%= @user.email %></p>
+<p>プロフィール : <%= @user.profile %></p>
+
+<% if current_user.id == @user.id %>
+  <%= link_to "編集する", edit_user_registration_path %>
+<% end %>
+
+<h2>ユーザーの投稿一覧</h2>
+<% @user.posts.each do |t| %>
+  <%= t.user.name %>
+  <%= t.food %>
+<% end %>
+
+<!-- 以下はいいね機能を実装している場合-->
+<h2>ユーザーがいいねした投稿一覧</h2>
+<% @user.liked_posts.each do |t| %>
+ 
+  <%= image_tag t.user.image_url, class:"icon", size: "250x200" if t.user.image? %>
+  <%= t.user.email %><br>
+
+  <%= image_tag t.image_url, size: "250x200" if t.image? %><br>
+  
+    食品名：<%= t.food %><br>
+    タンパク質：<%= t.protein %>g<br>
+    脂質：<%= t.fat %>g<br>
+    炭水化物：<%= t.carbo %>g<br>
+
+    <% if user_signed_in? %>
+    <% if current_user.already_liked?(t) %>
+        <%= link_to post_like_path(id: t.id, post_id: t.id), method: :delete do %>
+          <i class="fas fa-heart"></i><%= t.likes.count %>
+        <% end %>
+    <% else %>
+        <%= link_to post_likes_path(id: t.id, post_id: t.id), method: :post do %>
+          <i class="fas fa-heart"></i><%= t.likes.count %>
+        <% end %>
+    <% end %>
+<% else %>
+  <i class="fas fa-heart"></i><%= t.likes.count %>
+<% end %>
+<% end %>
+<!-- ここまで-->
+
+<%= link_to "Post一覧に戻る", posts_path %>
