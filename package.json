@@ -1,6 +1,9 @@
 {
   "name": "tokyorun",
   "private": true,
+  "scripts": {
+    "develop": "NODE_OPTIONS='--openssl-legacy-provider' gatsby develop",
+    },    
   "dependencies": {
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
