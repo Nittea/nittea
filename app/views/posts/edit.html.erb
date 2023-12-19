@@ -1,7 +1,12 @@
 <%= form_for @post do |f| %>
 
   <div class="field">
-    <%= f.label :食材・食品名 %>
+    <%= f.label :Title %>
+    <%= f.text_field :title, :size => 30 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :Post %>
     <%= f.text_field :food, :size => 30 %>
   </div>
 

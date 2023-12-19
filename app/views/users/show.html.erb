@@ -1,34 +1,84 @@
-<h1>users#show</h1>
-<%= image_tag @user.image_url, size: "250x200" if @user.image? %>
-<p>名前 : <%= @user.name %></p>
-<p>メールアドレス : <%= @user.email %></p>
-<p>プロフィール : <%= @user.profile %></p>
+<div class="mypagecontainer">
 
-<% if current_user.id == @user.id %>
-  <%= link_to "編集する", edit_user_registration_path %>
-<% end %>
+<h2>ユーザーマイページ</h2>
 
-<h2>ユーザーの投稿一覧</h2>
-<% @user.posts.each do |t| %>
-  <%= t.user.name %>
-  <%= t.food %>
-<% end %>
+  <div class="mypagebox">
+    <div class="posthead">
+      <div class="iconname">
 
-<!-- 以下はいいね機能を実装している場合-->
-<h2>ユーザーがいいねした投稿一覧</h2>
-<% @user.liked_posts.each do |t| %>
- 
-  <%= image_tag t.user.image_url, class:"icon", size: "250x200" if t.user.image? %>
-  <%= t.user.email %><br>
+        <div class="iconbox"> 
+          <%= image_tag @user.image_url, class:"icon", size: "250x200" if @user.image? %>
+        </div>
 
-  <%= image_tag t.image_url, size: "250x200" if t.image? %><br>
-  
-    食品名：<%= t.food %><br>
-    タンパク質：<%= t.protein %>g<br>
-    脂質：<%= t.fat %>g<br>
-    炭水化物：<%= t.carbo %>g<br>
+        <%= @user.name %><br>
+
+      </div>
+    </div>
+
 
     <% if user_signed_in? %>
+    <p>メールアドレス : <%= @user.email %></p>
+    <% end %>
+    <p>プロフィール : <%= @user.profile %></p>
+
+    <% if current_user.id == @user.id %>
+      <%= link_to "編集する", edit_user_registration_path %>
+    <% end %>
+
+  </div>
+
+ 
+  
+
+<details>
+  <summary>ユーザーの投稿一覧</summary>
+
+
+<div class="postsbox">
+
+<% @user.posts.each do |t| %>
+  <div class="post">
+    <div class="posthead">
+      <div class="iconname">
+
+          <div class="iconbox"> 
+            <%= image_tag t.user.image_url, class:"icon", size: "250x200" if t.user.image? %>
+          </div>
+ 
+          <%= t.user.name %><br>
+
+      </div>
+
+          <div class="whenmade">
+            <%=time_ago_in_words(t.created_at)%>前<br>
+          </div>
+
+    </div>
+
+          <div class="videobox">  
+            <%=  video_tag t.video_url ,:controls => true, :autoplay => true, :loop => true if t.video?%>
+          </div>
+
+          <div class="imagebox">
+            <%= image_tag t.image_url %><br>
+          </div> 
+
+          <% if t.title.present? %>
+            title:<%= t.title %><br>
+          <% end %>
+          post:<%=  raw Rinku.auto_link(simple_format(t.food), :urls, 'target="_blank" rel="noopener noreferrer"') %><br>
+          <% if t.protein.present? %>
+          タンパク質：<%= t.protein %>g<br>
+          <% end %>
+          <% if t.fat.present? %>
+          脂質：<%= t.fat %>g<br>
+          <% end %>
+          <% if t.carbo.present? %>
+          炭水化物：<%= t.carbo %>g<br>
+          <% end %>
+  
+
+  <% if user_signed_in? %>
     <% if current_user.already_liked?(t) %>
         <%= link_to post_like_path(id: t.id, post_id: t.id), method: :delete do %>
           <i class="fas fa-heart"></i><%= t.likes.count %>
@@ -39,9 +89,92 @@
         <% end %>
     <% end %>
 <% else %>
+
   <i class="fas fa-heart"></i><%= t.likes.count %>
 <% end %>
-<% end %>
-<!-- ここまで-->
+    </div>
+  <% end %>
+</div>
+</div>
 
-<%= link_to "Post一覧に戻る", posts_path %>
+</div>
+
+</details>
+
+
+
+<!-- 以下はいいね機能を実装している場合-->
+<details> 
+<summary>ユーザーがいいねした投稿一覧</summary>
+
+<div class="postsbox">
+<% @user.liked_posts.each do |t| %>
+  <div class="post">
+    <div class="posthead">
+      <div class="iconname">
+
+          <div class="iconbox"> 
+            <%= image_tag t.user.image_url, class:"icon", size: "250x200" if t.user.image? %>
+          </div>
+ 
+          <%= t.user.name %><br>
+
+      </div>
+
+          <div class="whenmade">
+            <%=time_ago_in_words(t.created_at)%>前<br>
+          </div>
+
+    </div>      
+
+    <div class="videobox">  
+      <%=  video_tag t.video_url ,:controls => true, :autoplay => true, :loop => true if t.video?%>
+    </div>
+
+    <div class="imagebox">
+        <%= image_tag t.image_url %><br>
+    </div> 
+
+    <% if t.title.present? %>
+      title:<%= t.title %><br>
+    <% end %>
+      post:<%=  raw Rinku.auto_link(simple_format(t.food), :urls, 'target="_blank" rel="noopener noreferrer"') %><br>
+    <% if t.protein.present? %>
+      タンパク質：<%= t.protein %>g<br>
+    <% end %>
+    <% if t.fat.present? %>
+      脂質：<%= t.fat %>g<br>
+    <% end %>
+    <% if t.carbo.present? %>
+      炭水化物：<%= t.carbo %>g<br>
+    <% end %>
+    
+
+    <% if user_signed_in? %>
+      <% if current_user.already_liked?(t) %>
+          <%= link_to post_like_path(id: t.id, post_id: t.id), method: :delete do %>
+            <i class="fas fa-heart"></i><%= t.likes.count %>
+          <% end %>
+      <% else %>
+          <%= link_to post_likes_path(id: t.id, post_id: t.id), method: :post do %>
+            <i class="fas fa-heart"></i><%= t.likes.count %>
+          <% end %>
+      <% end %>
+  <% else %>
+
+    <i class="fas fa-heart"></i><%= t.likes.count %>
+  <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+    
+
+</div>
+<!--postsboxの閉じdiv-->  
+
+</details> 
+
+
+</div>

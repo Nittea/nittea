@@ -1,17 +1,51 @@
-<h1>TokyoRun</h1>
-<h3>Post詳細</h3>
-<div class="post">
+<div class="indexbox">
 
-<%= @post.user.email %><br>
+<h2>Post詳細</h2>
 
-食品名：<%= @post.food %><br>
-タンパク質：<%= @post.protein %>g<br>
-脂質：<%= @post.fat %>g<br>
-炭水化物：<%= @post.carbo %>g<br>
+<div class="postsbox">
+
+  <div class="post">
+    <div class="posthead">
+      <div class="iconname">
+        <div class="iconbox">
+          <%= image_tag @post.user.image_url, class:"icon", size: "250x200" if @post.user.image? %>  
+      </div>
+        <%= @post.user.name %>
+     </div>
+        <div class="whenmade">
+          <%=time_ago_in_words(@post.created_at)%>前
+        </div>
+     </div>   
+
+<div class="videobox">  
+  <%=  video_tag @post.video_url ,:controls => true, :autoplay => true, :loop => true if @post.video?%>
+</div>      
+
+<div class="imagebox">
+  <%= image_tag @post.image_url %><br>
+</div>  
 
 
-  <p><%= @post.created_at %></p>
-    <% if user_signed_in? %>
+    <% if @post.title.present? %>
+      title:<%= @post.title %><br>
+    <% end %>
+
+    post:<%=  raw Rinku.auto_link(simple_format(@post.food), :urls, 'target="_blank" rel="noopener noreferrer"') %><br>
+
+    <% if @post.protein.present? %>
+      タンパク質：<%= @post.protein %>g<br>
+    <% end %>
+
+    <% if @post.fat.present? %>
+      脂質：<%= @post.fat %>g<br>
+    <% end %>
+
+    <% if @post.carbo.present? %>
+      炭水化物：<%= @post.carbo %>g<br>
+    <% end %>
+
+<div class="likeA">       
+  <% if user_signed_in? %>
       <% if current_user.already_liked?(@post) %>
         <%= link_to post_like_path(@post), method: :delete do %>
           <i class="fas fa-heart"></i><%= @post.likes.count %>
@@ -24,43 +58,77 @@
     <% else %>
     <i class="fas fa-heart"></i><%= @post.likes.count %>
     <% end %>
-    <p><%= @post.created_at %></p>
 </div>
 
+
+<div class="linkA">
+
+    <p><%= @post.created_at %></p>    
+    <% if user_signed_in? && current_user.id == @post.user_id %>
+    <%= link_to "編集する", edit_post_path(@post.id) %>
+    <%= link_to "削除する", post_path(@post.id), method: :delete %>
+    <% end %> 
+
+</div>
+
+</div>
+</div>
+
+
+
+<h2>コメント一覧</h2>
 <div class="comment-wrapper">
-  <p>コメント一覧</p>
-  <% @comments.each do |c| %>
-    <div>
-      <%= c.user.email unless c.user.blank? %>
-      <br>
-      <%= c.content %>
-    </div>
+  
+    <% @comments.each do |c| %>
+      
+      <div class="posthead">
+        <div class="iconname">
+          <div class="iconbox">
+      <%= image_tag c.user.image_url, class:"icon", size: "250x200" if c.user.image? %>
+          </div>
+      <%= c.user.name unless c.user.blank? %>
+        </div>
+        <div class="whenmade">
+          <%=time_ago_in_words(c.created_at)%>前
+        </div>
+      </div>    
+    <p class="commentA"><%= c.content %></p>
+    
       <br>
   <% end %>
 
-  <% if user_signed_in? %>
-    <%= form_with(model: [@post, @comment], local: true) do |f| %>
-      <%= f.text_area :content %>
-      <%= button_tag type: "submit" do %>
-        <i class="far fa-comments"></i> コメントする
+
+      <% if user_signed_in? %>
+        <%= form_with(model: [@post, @comment], local: true) do |f| %>
+          <%= f.text_area :content %>
+          <%= button_tag type: "submit" do %>
+            <i class="far fa-comments"></i> コメントする
+          <% end %>
+        <% end %>
       <% end %>
-    <% end %>
-  <% end %>
-</div>
+    </div>
+
+<div class="kouta">
 
 <h2>いいねしたユーザー</h2>
 <% @post.liked_users.each do |user| %>
-  <li><%= user.email %></li>
+
+  <div class="posthead">
+    <div class="iconname">
+      <div class="iconbox">
+        <%= image_tag user.image_url, class:"icon", size: "250x200" if user.image? %>
+      </div>
+  <%= user.name %>
+    </div>
+  </div>
 <% end %>
 
 <% @post.tags.each do |tag| %>
   <span><%= tag.name %></span>
 <% end %>
 
+</div>
 
-<%= link_to "Post一覧に戻る", posts_path %>
+</div>
 
-<% if user_signed_in? && current_user.id == @post.user_id %>
-<%= link_to "編集する", edit_post_path(@post.id) %>
-<%= link_to "削除する", post_path(@post.id), method: :delete %>
-<% end %> 
+<br>

@@ -1,0 +1,30 @@
+@media (max-width: 520px) {
+  div.mypagebox { width: 94vw; }
+}
+
+@media (min-width: 521px) {
+  /* 横幅が521px以上の場合に適用するスタイル */
+  div.mypagebox { width: 520px}
+}
+
+.mypagebox{
+  background-color: white;
+  color:black;
+  width:94vw;
+  border-radius: 2%;
+  margin: 0 auto; 
+  margin-top: 0.7vh;
+  margin-bottom: 0.7vh;
+  text-align: center;
+}
+
+
+
+
+.mypagebox{
+  background-color: white;
+}
+
+.mypagecontainer{
+    background-color: #F0F0F0;
+}

@@ -13,4 +13,6 @@ class Post < ApplicationRecord
     has_many :tags, through: :post_tag_relations, dependent: :destroy
 
     mount_uploader :video, VideoUploader
+
+    
 end

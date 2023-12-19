@@ -1,0 +1,27 @@
+/*まずはお決まりのボックスサイズ算出をborer-boxに */
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
+a.btn--red.btn--cubic {
+    width:30%;
+    border-bottom: 5px solid #9f000c;
+  }
+  
+  a.btn--red.btn--cubic:hover {
+    margin-top: 3px;
+    border-bottom: 2px solid #9f000c;
+  }
+  
+  a.btn--radius {
+    border-radius: 100vh;
+  }
+  
+  .fa-position-right {
+    position: absolute;
+    top: calc(50% - .5em);
+    right: 1rem;
+  }

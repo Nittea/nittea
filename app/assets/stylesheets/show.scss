@@ -1,0 +1,52 @@
+.comment-wrapper{
+    top: 0;
+    background-color: white;
+    color:black;
+    width:94vw;
+    border-radius: 2%;
+    margin: 0 auto; 
+    margin-top: 0.7vh;
+    margin-bottom: 0.7vh;
+}
+
+.commenthead{
+    display:flex;
+    align-items:center ;
+    position:relative;
+    left:5%;
+    width:75%;
+    font-weight: bold;
+    font-size: 1.2em;
+    font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", "メイリオ",
+      Meiryo, "ＭＳ Ｐゴシック", sans-serif;
+}
+
+.commentA{
+    margin-left: 4%;
+    margin-right: 4%;
+}
+
+@media (min-width: 521px) {
+    /* 横幅が521px以上の場合に適用するスタイル */
+    div.comment-wrapper { width: 520px}
+ }
+
+.kouta{
+    background-color: white;
+    color:black;
+    width:94vw;
+    border-radius: 4%;
+    margin: 0 auto; 
+    margin-top: 0.7vh;
+    margin-bottom: 0.7vh;
+}
+
+@media (min-width: 521px) {
+    /* 横幅が521px以上の場合に適用するスタイル */
+    div.kouta { width: 520px}
+ }
+
+
+.kouta li{
+    list-style: none;
+}

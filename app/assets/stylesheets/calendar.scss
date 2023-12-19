@@ -1,0 +1,43 @@
+.wday-0{
+    color: red;
+    background-color:rgba(246, 154, 154, 0.168) ;
+  }
+
+.wday-6{
+     color: blue;
+     background-color: rgb(233, 233, 250);
+  } 
+
+
+.calendar-title{
+  text-align: center;
+}
+
+.simple-calendar{
+  width: 1250px;
+  height: 100%;
+  margin:0 auto;
+  margin-bottom: 3vh;
+  background-color: white;
+  
+}
+
+.calendar{
+  overflow-x: scroll;
+}
+
+.calendar li{
+  list-style: none;
+}
+
+.calendar li a{
+  color: black;
+  text-decoration: none;
+}
+
+
+.calendar-heading{
+  margin:0 auto;
+  background-color: #F0F0F0;
+}
+

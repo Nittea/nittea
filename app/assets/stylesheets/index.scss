@@ -1,11 +1,179 @@
+@media (max-width: 520px) {
+    div.post { width: 94vw; }
+ }
+ 
+@media (min-width: 521px) {
+    /* 横幅が521px以上の場合に適用するスタイル */
+    div.post { width: 520px}
+ }
+
+
+
+
+
+.post{
+    background-color: white;
+    color:black;
+    width:94vw;
+    border-radius: 2%;
+    margin: 0 auto; 
+    margin-top: 0.7vh;
+    margin-bottom: 0.7vh;
+    text-align: center;
+}
+
+@media (min-width: 521px) {
+    /* 横幅が521px以上の場合に適用するスタイル */
+    div.search { width: 520px}
+}
+
+.tag li{
+    list-style: none;
+    margin-left: 2%;
+}
+
+
+
+.search{
+    position:relative;
+    text-align: center;
+    background-color: white;
+    color:black;
+    width:94vw;
+    border-radius: 4%;
+    margin: 0 auto; 
+    margin-top: 1.4vh;
+    margin-bottom: 1.4vh;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+.search ul li{
+    list-style: none;
+}
+.search ul li a{
+    text-decoration: none;
+    color:black;
+    width: 100%;
+}
+
+
+
+
+
+.posthead{
+    display:flex;
+    align-items:center ;
+    padding-top: 4%;
+    border-radius: 2%;
+}
+
+.whenmade{
+    color:#666666;
+}
+
+.iconname{
+    display:flex;
+    align-items:center ;
+    position:relative;
+    left:5%;
+    width:75%;
+    font-weight: bold;
+    font-size: 1.2em;
+    font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", "メイリオ",
+      Meiryo, "ＭＳ Ｐゴシック", sans-serif;
+}
+
 .icon{
-    
-    width: 5vw;
-    height: 5vw;
+    width: 7vh;
+    height: 7vh;
     //サイズ指定
-    border-radius: 100px;
+    border-radius: 10px;
     //画像を丸くする
     object-fit: cover;
     //タテヨコ比を変えないままトリミング
+    margin-right:2vw ;
+}
+
+
+
+
+
+
+.indexbox{
+    background-color: #F0F0F0;
 
 }
+
+.videobox{
+position: relative;
+overflow: hidden;
+}
+
+.videobox>video{
+width: 90%;
+border-radius: 2%;
+}
+
+.imagebox{
+    width:100%;
+    height:100%;
+}
+
+.imagebox img{
+    width:90%;
+    height:90%;
+    border-radius: 2%;
+}
+
+h2{
+    padding-top: 2%;
+    padding-left: 4%;
+    background-color: #F0F0F0;
+}
+
+
+
+
+.toshow a{
+    text-decoration: none;
+    color:blue;
+    width: 100%;
+}
+
+
+
+details {
+    font:
+      16px "Open Sans",
+      Calibri,
+      sans-serif;
+      margin-bottom: 1px;
+  }
+  
+  details > summary {
+    padding: 2px 6px;
+    width: fit-content;
+    background-color: #333132;
+    color: white;
+    border: none;
+    cursor: pointer;
+    list-style: none;
+  }
+  
+  details > p {
+    border-radius: 0 0 10px 10px;
+    background-color: #ddd;
+    padding: 2px 6px;
+    margin: 0;
+    box-shadow: 3px 3px 4px black;
+  }
+  
+  details[open] > summary {
+    background-color: #ccf;
+  }
+
+
+  
+
+

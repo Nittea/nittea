@@ -1,58 +1,122 @@
-<h1>TokyoRun</h1>
-<h3>一覧ページ</h3>
-
-<h3>投稿を検索</h3>
-
-
- <%= form_tag({controller:"posts",action:"index"}, method: :get) do %>
-  <details>
-  <summary>タグで検索</summary>
-  <% Tag.all.each do |t| %>
-    <li><%= check_box :tag_ids, t.name %><%= t.name %></li>
-<% end %>
-<%= submit_tag '検索する' %><br>
-<%= form_tag({controller:"posts",action:"index"}, method: :get) do %>
-  <%= text_field_tag :tag %>
-  <%= submit_tag 'タグを追加' %>
-
-</details>   
-
-
-<% end %>
-
-ポスト内を検索
-<%= form_tag({controller:"posts",action:"index"}, method: :get) do %>
-   <%= text_field_tag :search  ,'',placeholder:"検索" %>
-   <%= submit_tag '検索する'  %>
-<% end %>
-
-<%= link_to "新規投稿へ", new_post_path %>
-<div class="posts-container">
-
-
+<div class="indexbox">
 
 <% if user_signed_in? %>
-  <%= link_to "マイページへ", user_path(current_user.id) %>
+
+
+<div class="calendarbox">
+
+<details>
+<summary>　<i class="fa-regular fa-calendar-days"></i>カレンダー　</summary>
+  <div class="calendar">
+      <%= month_calendar events: @posts do |date, posts| %>
+        <%= date.day %>
+
+        <% posts.each do |t| %>
+        <div>
+        <% if user_signed_in? && current_user.id == t.user_id %>
+        <li><i class="fa-solid fa-flag"></i><%= link_to post_path(t.id) do %>
+          <%= t.title .truncate(8) %></li>
+      <% end %>
+      <% end %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
 <% end %>
 
+
+
+</details> 
+
+<div class="tag">
+<%= form_tag({controller:"posts",action:"index"}, method: :get) do %>
+  <details>
+    <summary>　<i class="fa-solid fa-hashtag"></i>タグで検索　</summary>
+      <% Tag.all.each do |t| %>
+        <li><%= check_box :tag_ids, t.name %><%= t.name %></li>
+      <% end %>
+        <%= submit_tag '検索する' %><br>
+          <%= form_tag({controller:"posts",action:"index"}, method: :get) do %>
+        <%= text_field_tag :tag %>
+          <%= submit_tag 'タグを追加' %>
+  </details>   
+<% end %>      
+</div>
+
+</div>
+
+
+  
+  <div class="search">
+     
+    <ul>
+      キーワード検索<i class="fa-solid fa-magnifying-glass"></i>
+          <%= form_tag({controller:"posts",action:"index"}, method: :get) do %>
+          <%= text_field_tag :search  ,'',placeholder:"検索" %>
+          <%= submit_tag '検索する'  %>
+          <% end %>
+
+          <li><i class="fa-solid fa-square-plus"></i><%= link_to "新規投稿へ", new_post_path %></li>
+
+
+
+
+        <% if user_signed_in? %>
+        <li><i class="fa-solid fa-gear"></i><%= link_to "マイページへ", user_path(current_user.id) %></li>
+        <% end %>
+
+    </ul>
+  </div>
+
+
+
+<h2>Post</h2>
+
+<div class="postsbox">
   <% @posts.each do |t| %>
     <div class="post">
-    <%= image_tag t.user.image_url, class:"icon", size: "250x200" if t.user.image? %>
-    <%=  video_tag t.video_url ,:controls => true, :autoplay => true, :loop => true if t.video?%>
-    <%= t.user.email %><br>
+    <div class="posthead">
+      <div class="iconname">
+        <div class="iconbox">
+          <%= image_tag t.user.image_url, class:"icon", size: "250x200" if t.user.image? %>  
+        </div>
+          <%= t.user.name %>
+      </div>
+        <div class="whenmade">
+          <%=time_ago_in_words(t.created_at)%>前
+        </div>
+      </div>    
+        
 
-    <%= image_tag t.image_url, size: "250x200" if t.image? %><br>
+
+      <div class="videobox">  
+        <%=  video_tag t.video_url ,:controls => true, :autoplay => true, :loop => true if t.video?%>
+      </div>
     
-      post：<%= t.food %><br>
+      <div class="imagebox">
+        <%= image_tag t.image_url %><br>
+      </div>    
+
+
+    <div class="momona">
+      
+      <% if t.title.present? %>
+      <ul class="title">title:<%= t.title %></ul>
+      <% end %>
+      <p>post:<%=  raw Rinku.auto_link((t.food), :urls, 'target="_blank" rel="noopener noreferrer"') %></p>
       <% if t.protein.present? %>
-      タンパク質：<%= t.protein %>g<br>
+      <p>タンパク質：<%= t.protein %>g</p>
       <% end %>
       <% if t.fat.present? %>
-      脂質：<%= t.fat %>g<br>
+      <p>脂質：<%= t.fat %>g</p>
       <% end %>
       <% if t.carbo.present? %>
-      炭水化物：<%= t.carbo %>g<br>
+      <p>炭水化物：<%= t.carbo %>g</p>
       <% end %>
+
+    </div>  
+
+<div class="likeA">      
       <% if user_signed_in? %>
       <% if current_user.already_liked?(t) %>
           <%= link_to post_like_path(id: t.id, post_id: t.id), method: :delete do %>
@@ -68,41 +132,24 @@
 
     <i class="fas fa-heart"></i><%= t.likes.count %>
     
-  
   <% end %>
+</div>  
       
-
   <% t.tags.each do |tag| %>
     <span><%= tag.name %></span>
   <% end %>
 
-      <p><%= link_to "詳細へ", post_path(t.id) %> 
-
       
-      
-
-      <% if user_signed_in? && current_user.id == t.user_id %>
-      <%= link_to "編集する", edit_post_path(t.id) %>
-      <%= link_to "削除する", post_path(t.id), method: :delete %>
-    <% end %> 
-    </div>
-  <% end %>
+        <% if user_signed_in? && current_user.id == t.user_id %>
+          <p class="toshow"><%= link_to "詳細へ", post_path(t.id) %></p> 
+        <% end %> 
+      </div>
+    <% end %>
+  </div>
 </div>
-<p id="notice"><%= notice %></p>
-
 
 <% end %>
 
 <br>
 
-
-
-<%= month_calendar events: @posts do |date, posts| %>
-  <%= date.day %>
-
-  <% posts.each do |t| %>
-    <div>
-      <%= link_to t.food, post_path(t.id)  %>
-    </div>
-  <% end %>
-<% end %>
+</div>

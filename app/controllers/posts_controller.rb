@@ -6,12 +6,14 @@ class PostsController < ApplicationController
 
     def index
       if params[:search] == nil
-        @posts= Post.all
+        @posts= Post.all.order(created_at: :desc)
       elsif params[:search] == ''
-        @posts= Post.all
+        @posts= Post.all.order(created_at: :desc)
       else
         #部分検索
-        @posts = Post.where("food LIKE ? ",'%' + params[:search] + '%')
+      search = params[:search]
+        @posts = Post.where("food LIKE ? OR title LIKE ?" , "%#{search}%", "%#{search}%").order(created_at: :desc)
+
       end
       if params[:tag_ids]
         @posts = []
@@ -34,7 +36,6 @@ class PostsController < ApplicationController
     
       def create
         post = Post.new(post_params)
-
         post.user_id = current_user.id
         
         if post.save!
@@ -71,7 +72,7 @@ class PostsController < ApplicationController
     
       private
       def post_params
-        params.require(:post).permit(:food, :protein, :fat, :carbo, :start_time, :image, :video, tag_ids: [])
+        params.require(:post).permit(:title, :food, :protein, :fat, :carbo, :start_time, :image, :video, tag_ids: [])
       end
      #ここまで
     end

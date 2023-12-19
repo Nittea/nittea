@@ -1,64 +1,81 @@
-<h1>Tokyorun</h1>
-<h3>新規投稿ページ</h3>
+<div class="loginbox">
+<div class= "login">
+<div class="logintext">
+
+<br>
+<h1>新規投稿</h1>
+
 <%= form_for @post do |f| %>
 
   <div class="field">
-    <%= f.label :食材・食品名 %>
+    <%= f.label :title %><br>
+    <%= f.text_field :title, :size => 30 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :post %><br>
     <%= f.text_field :food, :size => 30 %>
   </div>
 
 
-  <div class="field">
-    <%= f.label :image %>
-    <%= f.file_field :image %>
+  <div class ="newimage">
+    <div class="field">
+      <%= f.label :image %><br>
+      <%= f.file_field :image %>
+    </div>
   </div>
 
-  <div class="field">
-      <%= f.label :video %>
-      <%= f.file_field :video %>
-   </div>
+  <div class ="newvideo">
+    <div class="field">
+        <%= f.label :video %><br>
+        <%= f.file_field :video %>
+    </div>
+  </div>
  
-   
-  <div class="field">
-    <%= f.label :タンパク質  %>
-    <%= f.number_field :protein, step: '0.1', :size => 10 %>
+  <div class ="newprotein">
+    <div class="field">
+      <%= f.label :タンパク質  %><br>
+      <%= f.number_field :protein, step: '0.1', :size => 10 %>
+    </div>
   </div>
 
 
-
   <div class="field">
-    <%= f.label :脂質  %>
+    <%= f.label :脂質  %><br>
     <%= f.number_field :fat, step: '0.1', :size => 10 %>
   </div>
 
 
   <div class="field">
-    <%= f.label :炭水化物  %>
+    <%= f.label :炭水化物  %><br>
     <%= f.number_field :carbo, step: '0.1', :size => 10 %>
   </div>
 
   <div class="time">
-  <%= f.label :start_time %>
-  <%= f.datetime_select :start_time %>
-</div>
+   <%= f.label :投稿時間 %><br>
+   <%= f.datetime_select :start_time %>
+  </div>
 
 
-<summary>タグ一覧
-  <details>   
-    <div class='form-group'>
-      <%= f.collection_check_boxes(:tag_ids, Tag.all, :id, :name) do |tag| %>
-        <div class='form-check'>
-          <%= tag.label class: 'form-check-label' do %>
-                <%= tag.check_box class: 'form-check-input' %>
-                <%= tag.text %>    
-              <% end %>
+  <summary>タグ一覧
+    <details>   
+      <div class='form-group'>
+        <%= f.collection_check_boxes(:tag_ids, Tag.all, :id, :name) do |tag| %>
+          <div class="form-check">
+                <%= tag.label class: 'form-check-label' do %>
+                  <%= tag.check_box class: 'form-check-input' %>
+                  <%= tag.text %>    
+                <% end %>
           </div>
-      <% end %>
+        <% end %>
+      </div>
     </details>
   </summary>
-</div>
+
 
   <%= f.submit "投稿する" %>
 <% end %>
 
-<%= link_to "一覧に戻る", posts_path %>
+</div>
+</div>
+</div>
