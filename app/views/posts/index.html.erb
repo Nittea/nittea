@@ -15,7 +15,7 @@
         <div>
         <% if user_signed_in? && current_user.id == t.user_id %>
         <li><i class="fa-solid fa-flag"></i><%= link_to post_path(t.id) do %>
-          <%= t.title .truncate(8) %></li>
+          <%= t.title.truncate(8) %></li>
       <% end %>
       <% end %>
       </div>
