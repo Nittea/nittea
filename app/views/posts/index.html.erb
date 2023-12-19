@@ -6,7 +6,7 @@
 <div class="calendarbox">
 
 <details>
-<summary>　<i class="fa-regular fa-calendar-days"></i>カレンダー　</summary>
+<summary><i class="fa-regular fa-calendar-days"></i>カレンダー</summary>
   <div class="calendar">
       <%= month_calendar events: @posts do |date, posts| %>
         <%= date.day %>
@@ -31,7 +31,7 @@
 <div class="tag">
 <%= form_tag({controller:"posts",action:"index"}, method: :get) do %>
   <details>
-    <summary>　<i class="fa-solid fa-hashtag"></i>タグで検索　</summary>
+    <summary><i class="fa-solid fa-hashtag"></i>タグで検索</summary>
       <% Tag.all.each do |t| %>
         <li><%= check_box :tag_ids, t.name %><%= t.name %></li>
       <% end %>
